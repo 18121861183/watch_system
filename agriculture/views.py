@@ -2,8 +2,6 @@ import json
 
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.contrib import staticfiles
 # Create your views here.
 from agriculture import models
 
