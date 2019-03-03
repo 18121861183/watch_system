@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../static/layui-v2.4.5/layui/css/layui.css" media="all">
+</head>
+<body>
+<div style="margin-top: 15px; margin-right: 20px;">
+    <form class="layui-form" action="" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">网站名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" autocomplete="off" placeholder="请输入网站名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">网址URL</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" autocomplete="off" placeholder="请输入网站URL" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item" pane="">
+            <label class="layui-form-label">安全状态</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="like1[safe]" lay-skin="primary" title="安全" checked="">
+                <input type="checkbox" name="like1[leak]" lay-skin="primary" title="漏洞">
+                <input type="checkbox" name="like1[danger]" lay-skin="primary" title="危险">
+                <input type="checkbox" name="like1[offline]" lay-skin="primary" title="离线">
+                <input type="checkbox" name="like1[online]" lay-skin="primary" title="在线" checked="">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="/submit" lay-filter = "webSubmit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="../../static/layui-v2.4.5/layui/layui.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['form', 'layedit', 'laydate'], function(){
+    var form = layui.form,layer = layui.layer,layedit = layui.layedit,laydate = layui.laydate;
+
+    //监听提交
+    form.on('submit(webSubmit)', function(data){
+        layer.msg(JSON.stringify(data.field));
+        return false;
+    });
+});
+</script>
+</body>
+</html>
