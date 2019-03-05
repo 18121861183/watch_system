@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,11 +7,12 @@
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>四川省农业信息化网站威胁监测系统</title>
-    <link rel="stylesheet" href="../../static/layui-v2.4.5/layui/css/layui.css">
+    <link rel="stylesheet" href="{% static 'layui-v2.4.5/layui/css/layui.css' %}" media="all">
 </head>
 <body>
-<h1 class="site-h1" style="margin: 20px">四川省农业农村网</h1>     <button class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon"></i> 删除</button>
+<h1 class="site-h1" style="margin: 20px">四川省农业农村网</h1>
 <h3 class="site-h1" style="margin: 20px">http://www.scagri.gov.cn/</h3>
+<button class="layui-btn layui-btn-normal" onclick="editDetail({{ web_id }})" style="margin: 15px"><i class="layui-icon layui-icon-edit" onclick="editDetail({{ web_id }})"></i>  编辑网站信息</button>
 <div class="layui-tab" style="margin: 15px;">
     <ul class="layui-tab-title">
         <li class="layui-this">WHOIS</li>
@@ -31,43 +33,43 @@
                 <tbody>
                 <tr>
                     <td>注册者</td>
-                    <td>四川省农业厅信息中心</td>
+                    <td>{{ whois_info.registrant }}</td>
                 </tr>
                 <tr>
                     <td>注册机构</td>
-                    <td></td>
+                    <td>{{ whois_info.registrant_company }}</td>
                 </tr>
                 <tr>
                     <td>邮箱</td>
-                    <td>scagrizz@vip.163.com</td>
+                    <td>{{ whois_info.email }}</td>
                 </tr>
                 <tr>
                     <td>地址</td>
-                    <td></td>
+                    <td>{{ whois_info.address }}</td>
                 </tr>
                 <tr>
                     <td>电话</td>
-                    <td></td>
+                    <td>{{ whois_info.phone }}</td>
                 </tr>
                 <tr>
                     <td>注册时间</td>
-                    <td>2000-07-25 00:00:00</td>
+                    <td>{{ whois_info.registrant_time }}</td>
                 </tr>
                 <tr>
                     <td>过期时间</td>
-                    <td>2019-07-25 00:00:00</td>
+                    <td>{{ whois_info.expiration_time }}</td>
                 </tr>
                 <tr>
                     <td>更新时间</td>
-                    <td></td>
+                    <td>{{ whois_info.update_time }}</td>
                 </tr>
                 <tr>
                     <td>域名服务商</td>
-                    <td>厦门三五互联科技有限公司</td>
+                    <td>{{ whois_info.dns_facilitator }}</td>
                 </tr>
                 <tr>
                     <td>域名服务器</td>
-                    <td>ns3.dns-diy.com;ns4.dns-diy.com</td>
+                    <td>{{ whois_info.dns_server }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -82,15 +84,15 @@
                 <tbody>
                 <tr>
                     <td>IP地址</td>
-                    <td>127.64.43.68</td>
+                    <td>{{ ip_info.ip_address }}</td>
                 </tr>
                 <tr>
                     <td>地理位置</td>
-                    <td>CN中国，四川，成都（电信）</td>
+                    <td>{{ ip_info.location }}</td>
                 </tr>
                 <tr>
                     <td>ASN</td>
-                    <td>4134（ChinaNet-backbone No.31）</td>
+                    <td>{{ ip_info.ASN }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -110,26 +112,18 @@
                   </tr>
                 </thead>
                 <tbody>
+                {% for info in threat_info.threat %}
                 <tr>
-                    <td>Threatbook Labs</td>
-                    <td>2018-08-30</td>
-                    <td>白名单</td>
+                    <td>{{ info.source }}</td>
+                    <td>{{ info.time }}</td>
+                    <td>{{ info.tag }}</td>
                 </tr>
-                <tr>
-                    <td>Threatbook Labs</td>
-                    <td>2018-05-02</td>
-                    <td>白名单</td>
-                </tr>
-                <tr>
-                    <td>Threatbook Labs</td>
-                    <td>2017-02-30</td>
-                    <td>白名单</td>
-                </tr>
+                {% endfor %}
                 </tbody>
             </table>
             <blockquote class="layui-elem-quote">相关事件</blockquote>
             <blockquote class="layui-elem-quote layui-quote-nm">
-              无匹配数据
+              {{ threat_info.event }}
             </blockquote>
             <blockquote class="layui-elem-quote">该地址上的可疑URL</blockquote>
             <table class="layui-table" lay-even="" lay-skin="nob">
@@ -144,14 +138,12 @@
                   </tr>
                 </thead>
                 <tbody>
+                {% for info in threat_info.url %}
                 <tr>
-                    <td>file:///C:/Users/16006/Documents/WeChat Files/wxid_609vb0brcwsh22/Files/原型页面0213/威胁情报.html</td>
-                    <td>未检出</td>
+                    <td>{{ info.url }}</td>
+                    <td>{{ info.result }}</td>
                 </tr>
-                <tr>
-                    <td>file:///C:/Users/16006/Documents/WeChat Files/wxid_609vb0brcwsh22/Files/原型页面0213/威胁情报.html</td>
-                    <td>未检出</td>
-                </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -165,36 +157,14 @@
                     <col>
                 </colgroup>
                 <tbody>
+                {% for info in leak_info %}
                 <tr>
-                    <td>cve-2016-66548</td>
-                    <td>2018-08-30</td>
-                    <td>高危</td>
-                    <td>病毒在中招Windows电脑植入攻击模块conn.exe，</td>
+                    <td>{{ info.number }}</td>
+                    <td>{{ info.time }}</td>
+                    <td>{{ info.level }}</td>
+                    <td>{{ info.message }}</td>
                 </tr>
-                <tr>
-                    <td>cve-2016-66548</td>
-                    <td>2018-08-30</td>
-                    <td>高危</td>
-                    <td>病毒在中招Windows电脑植入攻击模块conn.exe，</td>
-                </tr>
-                <tr>
-                    <td>cve-2016-66548</td>
-                    <td>2018-08-30</td>
-                    <td>高危</td>
-                    <td>病毒在中招Windows电脑植入攻击模块conn.exe，</td>
-                </tr>
-                <tr>
-                    <td>cve-2016-66548</td>
-                    <td>2018-08-30</td>
-                    <td>高危</td>
-                    <td>病毒在中招Windows电脑植入攻击模块conn.exe，</td>
-                </tr>
-                <tr>
-                    <td>cve-2016-66548</td>
-                    <td>2018-08-30</td>
-                    <td>高危</td>
-                    <td>病毒在中招Windows电脑植入攻击模块conn.exe，</td>
-                </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -207,26 +177,13 @@
                     <col>
                 </colgroup>
                 <tbody>
+                {% for info in server_info %}
                 <tr>
-                    <td>Apache-server</td>
-                    <td>http</td>
-                    <td>80</td>
+                    <td>{{ info.server_name }}</td>
+                    <td>{{ info.protocol }}</td>
+                    <td>{{ info.port }}</td>
                 </tr>
-                <tr>
-                    <td>Apache-server</td>
-                    <td>http</td>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <td>Apache-server</td>
-                    <td>http</td>
-                    <td>80</td>
-                </tr>
-                <tr>
-                    <td>Apache-server</td>
-                    <td>http</td>
-                    <td>80</td>
-                </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -253,63 +210,43 @@
                   </tr>
                 </thead>
                 <tbody>
+                {% for info in network_info %}
                 <tr>
-                    <td>2019/2/13 14:58</td>
-                    <td>181.198.242.220</td>
-                    <td>www.scagri.gov.cn</td>
-                    <td>http://www.scagri.gov.cn/</td>
-                    <td>GET</td>
-                    <td>HTTP/1.1 200 OK</td>
-                    <td>危险IP访问</td>
+                    <td>{{ info.time }}</td>
+                    <td>{{ info.client }}</td>
+                    <td>{{ info.server }}</td>
+                    <td>{{ info.url }}</td>
+                    <td>{{ info.method }}</td>
+                    <td>{{ info.status }}</td>
+                    <td>{{ info.warn }}</td>
                 </tr>
-                <tr>
-                    <td>2019/2/13 14:58</td>
-                    <td>181.198.242.220</td>
-                    <td>www.scagri.gov.cn</td>
-                    <td>http://www.scagri.gov.cn/</td>
-                    <td>GET</td>
-                    <td>HTTP/1.1 200 OK</td>
-                    <td>危险IP访问</td>
-                </tr>
-                <tr>
-                    <td>2019/2/13 14:58</td>
-                    <td>181.198.242.220</td>
-                    <td>www.scagri.gov.cn</td>
-                    <td>http://www.scagri.gov.cn/</td>
-                    <td>GET</td>
-                    <td>HTTP/1.1 200 OK</td>
-                    <td>危险IP访问</td>
-                </tr>
-                <tr>
-                    <td>2019/2/13 14:58</td>
-                    <td>181.198.242.220</td>
-                    <td>www.scagri.gov.cn</td>
-                    <td>http://www.scagri.gov.cn/</td>
-                    <td>GET</td>
-                    <td>HTTP/1.1 200 OK</td>
-                    <td>危险IP访问</td>
-                </tr>
-                <tr>
-                    <td>2019/2/13 14:58</td>
-                    <td>181.198.242.220</td>
-                    <td>www.scagri.gov.cn</td>
-                    <td>http://www.scagri.gov.cn/</td>
-                    <td>GET</td>
-                    <td>HTTP/1.1 200 OK</td>
-                    <td>危险IP访问</td>
-                </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<script src="../../static/layui-v2.4.5/layui/layui.js"></script>
+<script src="{% static 'layui-v2.4.5/layui/layui.js' %}"></script>
 <script>
     layui.use('element', function () {
         var $ = layui.jquery
             , element = layui.element;
+
     })
+    layui.use(['layer', 'form'], function () {
+        var layer = layui.layer, form = layui.form;
+    });
+    editDetail = function (_id) {
+        layer.open({
+            type: 2,
+            title: '编辑网站',
+            maxmin: true,
+            shadeClose: true, //点击遮罩关闭层
+            area: ['500px', '380px'],
+            content: '/detail_window?_id='+_id
+        });
+    }
 </script>
 </body>
 </html>

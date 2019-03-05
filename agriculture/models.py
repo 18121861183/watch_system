@@ -21,5 +21,10 @@ class WebDetail(models.Model):
     threat_info = models.TextField(verbose_name="威胁信息")
     leak_info = models.TextField(verbose_name="漏洞信息")
     server_info = models.TextField(verbose_name="端口服务")
+    network_info = models.TextField(verbose_name="网络服务")
 
 
+class ArticleRecord(models.Model):
+    article_title = models.CharField(max_length=200, verbose_name="文章标题")
+    content = models.TextField(verbose_name="文章原文")
+    create_time = models.DateTimeField(verbose_name="文章时间", default=timezone.now)

@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>layui</title>
+    <title>四川省农业信息化网站威胁监测系统</title>
     <link rel="stylesheet" href="{% static 'layui-v2.4.5/layui/css/layui.css' %}" media="all">
 </head>
 <body>
@@ -13,16 +13,39 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">删除所选</button>
-        <button id="thread_import" type="button" class="layui-btn layui-btn-sm" lay-event="import">导入威胁情报</button>
+        <button id="thread_import" type="button" class="layui-btn layui-btn-sm">导入威胁情报</button>
     </div>
+</script>
+
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 
 <script src="{% static 'layui-v2.4.5/layui/layui.js' %}"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-    layui.use(['layer', 'form'], function () {
-        var layer = layui.layer, form = layui.form;
+    layui.use('upload', function(){
+      var $ = layui.jquery
+      ,upload = layui.upload;
+
+      //普通图片上传
+      var uploadInst = upload.render({
+        elem: '#thread_import'
+        ,url: '/import/'
+        ,done: function(res){
+          //如果上传失败
+          if(res.code > 0){
+            return layer.msg('上传失败');
+          }
+          //上传成功
+        }
+        ,error: function(){
+          //演示失败状态，并实现重传
+
+        }
+      });
+
     });
 
     layui.use('table', function () {
@@ -35,67 +58,46 @@
             , title: '用户数据表'
             , cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                , {field: 'id', title: 'ID', minWidth: 80, fixed: 'left', unresize: true, sort: true, align: 'center'}
+                , {field: 'key', title: 'ID', minWidth: 80, fixed: 'left', unresize: true, sort: true, align: 'center'}
                 , {field: 'create_time', title: '更新时间', minWidth: 200, align: 'center'}
                 , {field: 'key', title: '情报关键字', minWidth: 200, align: 'center'}
                 , {field: 'tag', title: '威胁标签', minWidth: 200, align: 'center'}
+                , {fixed: 'right', title:'操作', toolbar: '#barDemo', width:150, align: 'center'}
             ]]
             , page: true
         });
 
         //头工具栏事件
-        table.on('toolbar(test)', function (obj) {
+        table.on('toolbar(intelligentTable)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id);
             switch (obj.event) {
                 case 'getCheckData':
+                    alert(111)
                     var data = checkStatus.data;
                     layer.alert(JSON.stringify(data));
                     break;
                 case 'import':
+                    alert(222)
                     layer.msg(checkStatus.isAll ? '全选' : '未全选');
                     break;
             }
 
         });
 
-        //监听行工具事件
-        table.on('tool(test)', function (obj) {
+        table.on('tool(intelligentTable)', function(obj){
             var data = obj.data;
             //console.log(obj)
-            if (obj.event === 'del') {
-                layer.confirm('真的删除行么', function (index) {
-                    obj.del();
-                    layer.close(index);
-                });
-            } else if (obj.event === 'edit') {
-                layer.prompt({
-                    formType: 2
-                    , value: data.email
-                }, function (value, index) {
-                    obj.update({
-                        email: value
-                    });
-                    layer.close(index);
-                });
+            if(obj.event === 'del'){
+              layer.confirm('真的删除行么', function(index){
+                obj.del();
+                layer.close(index);
+              });
             }
         });
+
     });
 
-    layui.use('upload', function () {
-        var upload = layui.upload;
 
-        //执行实例
-        var uploadInst = upload.render({
-            elem: '#thread_import' //绑定元素
-            , url: '/import/' //上传接口
-            , done: function (res) {
-                //上传完毕回调
-            }
-            , error: function () {
-                //请求异常回调
-            }
-        });
-    });
 </script>
 
 </body>

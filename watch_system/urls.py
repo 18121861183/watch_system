@@ -25,10 +25,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('edit/', views.web_edit),
+    path('edit_info/', views.edit_info),
     path('web_detail/', views.web_detail),
     path('inte_list/', views.intel_list),
     path('intelligence_record/', views.intelligence_record),
     path('import/', views.import_intel),
-    path('edit_detail/', views.edit_web_detail)
+    path('edit_detail/', views.edit_web_detail),
+    path('detail_window/', views.web_detail_edit_page),
+    path('article/', views.article_page),
+    path('article_import/', views.article_import_page),
+    path('article_insert/', views.article_import)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

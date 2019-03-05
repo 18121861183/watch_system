@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>四川省农业信息化网站威胁监测系统</title>
+    <link rel="stylesheet" href="{% static 'layui-v2.4.5/layui/css/layui.css' %}">
+</head>
+<body>
+<form class="layui-form" action="">
+  <div class="layui-form-item">
+    <label class="layui-form-label">文章标题</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" placeholder="请输入标题" style="width: 90%" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">文章内容</label>
+    <div class="layui-input-block">
+      <textarea type="text" name="content" placeholder="请输入正文" autocomplete="off" class="layui-input" style="width: 90%;height: 150px"></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+<script src="{% static 'layui-v2.4.5/layui/layui.js' %}"></script>
+<script>
+    layui.use('form', function(){
+      var form = layui.form,layer = layui.layer,layedit = layui.layedit,laydate = layui.laydate;
+      var $ = layui.jquery
+
+      //监听提交
+      form.on('submit(formDemo)', function(data){
+        {#layer.msg(JSON.stringify(data.field));#}
+        $.ajax({
+                type: 'POST',
+                url: '/article_insert/',//发送请求
+                data: data.field,
+                success: function(result) {
+                    layer.msg(result);
+                }
+        });
+        return false;
+      });
+    });
+</script>
+
+</body>
+</html>
