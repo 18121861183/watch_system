@@ -27,10 +27,21 @@ def index(request):
         _id = web.id
         name = web.web_name
         url = web.web_url
-        status = web.status
+        status = web.status.split(',')
+        check = dict()
+        if 'safe' in status:
+            check['safe'] = 'true'
+        if 'leak' in status:
+            check['leak'] = 'true'
+        if 'danger' in status:
+            check['danger'] = 'true'
+        if 'offline' in status:
+            check['offline'] = 'true'
+        if 'online' in status:
+            check['online'] = 'true'
         info['name'+str(_id)] = name
         info['url'+str(_id)] = url
-        info['status'+str(_id)] = status
+        info['status'+str(_id)] = check
     return render(request, 'index.html', info)
 
 
@@ -38,7 +49,20 @@ def web_edit(request):
     if request.method == 'GET':
         _id = request.GET.get('_id')
         info = models.WebInfo.objects.filter(id=_id).first()
-        message = {"web_id": info.id, "web_name": info.web_name, "web_url": info.web_url, "status": info.status}
+        status = info.status
+        array = status.split(',')
+        check = dict()
+        if 'safe' in array:
+            check['safe'] = 'true'
+        if 'leak' in array:
+            check['leak'] = 'true'
+        if 'danger' in array:
+            check['danger'] = 'true'
+        if 'offline' in array:
+            check['offline'] = 'true'
+        if 'online' in array:
+            check['online'] = 'true'
+        message = {"web_id": info.id, "web_name": info.web_name, "web_url": info.web_url, "status": check}
         return render(request, 'model/web_edit.html', message)
 
 

@@ -25,11 +25,11 @@
         <div class="layui-form-item" pane="">
             <label class="layui-form-label">安全状态</label>
             <div class="layui-input-block">
-                <input type="checkbox" name="status[safe]" lay-skin="primary" title="安全" checked="">
-                <input type="checkbox" name="status[leak]" lay-skin="primary" title="漏洞">
-                <input type="checkbox" name="status[danger]" lay-skin="primary" title="危险">
-                <input type="checkbox" name="status[offline]" lay-skin="primary" title="离线">
-                <input type="checkbox" name="status[online]" lay-skin="primary" title="在线" checked="">
+                <input type="checkbox" name="status[safe]" lay-skin="primary" title="安全" {% if status.safe %}checked=""{% endif %}>
+                <input type="checkbox" name="status[leak]" lay-skin="primary" title="漏洞" {% if status.leak %}checked=""{% endif %}>
+                <input type="checkbox" name="status[danger]" lay-skin="primary" title="危险" {% if status.danger %}checked=""{% endif %}>
+                <input type="checkbox" name="status[offline]" lay-skin="primary" title="离线" {% if status.offline %}checked=""{% endif %}>
+                <input type="checkbox" name="status[online]" lay-skin="primary" title="在线" {% if status.online %}checked=""{% endif %}>
             </div>
         </div>
 
