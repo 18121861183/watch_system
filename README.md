@@ -93,5 +93,11 @@ watch_system-master/agriculture/migrations 文件夹下除了__init__.py文件�
 agriculture_webinfo表中增加9条数据：<br/>
 	id字段从1-9<br/>
 	status选项：safe,leak,online,offline,danger<br/>
+<br/>
+<br/>
+
+# 网站详细信息编辑：
+参考 web详细信息编辑格式.json 格式
+
 
 
