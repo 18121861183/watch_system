@@ -93,6 +93,15 @@ watch_system-master/agriculture/migrations 文件夹下除了__init__.py文件�
 agriculture_webinfo表中增加9条数据：<br/>
 	id字段从1-9<br/>
 	status选项：safe,leak,online,offline,danger<br/>
+1	四川农业网	http://1.1.1.1	safe,leak,online<br/>
+2	农信网	http://14324.fgds2	safe,danger,online<br/>
+3	test3	test3	online,danger <br/>
+4	test4	test4	online,safe <br/>
+5	test5	test5	online,leak <br/>
+6	test6	test6	offline,danger <br/>
+7	test7	test7	online,safe <br/>
+8	test8	test8	online,danger <br/>
+9	test9	test9	online,safe <br/>
 <br/>
 <br/>
 
