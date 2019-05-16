@@ -1,20 +1,10 @@
 # 安装步骤
 
-一：依赖环境安装
+一：依赖环境安装<br/>
   1、python3+ <br/>
   2、pip3 <br/>
   3、pip install -r requirements.txt <br/>
   4、apt install mysql-server <br/>
- 
- 
-二：环境初始化 <br/>
-  1、python3 manage.py makemigrations <br/>
-  2、python3 manage.py migrate <br/>
- <br/>
- <br/>
-三：修改初始化配置<br/>
-  1、修改watch_system/settings.py 中DATABASES 中数据库IP和port等，以及数据库名称<br/>
-  2、确认mysql数据库中已经创建了对应名称的数据库<br/>
  <br/>
  <br/>
 Windows 安装<br/>
@@ -95,3 +85,13 @@ watch_system-master/agriculture/migrations 文件夹下除了__init__.py文件�
 		python manage.py migrate<br/>
 运行项目： python manage.py runserver 0.0.0.0:8000 <br/>
 <br/>
+<br/>
+<br/>
+<br/>
+# 初始化数据：
+连接数据库：<br/>
+agriculture_webinfo表中增加9条数据：<br/>
+	id字段从1-9<br/>
+	status选项：safe,leak,online,offline,danger<br/>
+
+
